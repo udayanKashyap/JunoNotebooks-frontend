@@ -1,13 +1,44 @@
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
+import useUserStore from "../store/userStore";
 
-const UserRegistration = () => {
+const UserManagement = ({ type }: { type: string }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+  const loginUser = useUserStore((state) => state.login);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`username ${formData.username}\npassword ${formData.password}`);
+    if (type == "Register") {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/user/register/`,
+          {
+            username: formData.username,
+            password: formData.password,
+          },
+        );
+        console.log(res.data);
+      } catch (error) {
+        if (error instanceof AxiosError) console.log(error.message);
+      }
+    } else if (type == "Login") {
+      console.log("logging in");
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/user/login/`,
+          {
+            username: formData.username,
+            password: formData.password,
+          },
+        );
+        loginUser(res.data);
+      } catch (error) {
+        if (error instanceof AxiosError) console.log(error.message);
+      }
+    }
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +49,7 @@ const UserRegistration = () => {
   };
   return (
     <div className="max-w-md mx-auto p-6 bg-gray-100 rounded shadow">
-      <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">{type}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
@@ -57,7 +88,7 @@ const UserRegistration = () => {
             type="submit"
             className="mt-10 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
-            Submit
+            {type}
           </button>
         </div>
       </form>
@@ -65,4 +96,4 @@ const UserRegistration = () => {
   );
 };
 
-export default UserRegistration;
+export default UserManagement;

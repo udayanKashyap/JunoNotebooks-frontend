@@ -16,9 +16,15 @@ const Navbar = () => {
         <div className="space-x-4">
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
-            onClick={() => navigate("/user")}
+            onClick={() => navigate("/user/login")}
           >
-            User
+            User Login
+          </button>
+          <button
+            className="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
+            onClick={() => navigate("/user/register")}
+          >
+            User Registration
           </button>
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"

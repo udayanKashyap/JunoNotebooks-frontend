@@ -1,8 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { useState } from "react";
 import Home from "./Pages/Home";
 import MyNote from "./Pages/MyNote";
-import UserRegistration from "./Pages/UserRegistration";
+import UserManagement from "./Pages/UserManagement";
 
 function App() {
   return (
@@ -10,7 +9,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/note" element={<MyNote />} />
-        <Route path="/user" element={<UserRegistration />} />
+        <Route path="/user/login" element={<UserManagement type="Login" />} />
+        <Route
+          path="/user/register"
+          element={<UserManagement type="Register" />}
+        />
       </Routes>
     </Router>
   );
